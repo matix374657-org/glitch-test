@@ -4,7 +4,7 @@ FROM nginx:mainline-alpine3.20
 # Install Node.js, npm, and Nginx
 RUN apk add --no-cache nodejs npm openssh
 
-COPY ./secret/sftp-client/id_rsa.pub /secret/ssh/id_rsa.pub
+COPY ./secret/sftp-client/id_rsa.pub /tmp/ssh/id_rsa.pub
 
 # Create the SSH directory and configure it
 RUN mkdir /var/run/sshd \
@@ -14,7 +14,7 @@ RUN mkdir /var/run/sshd \
     && ssh-keygen -A \
     && chmod 700 /root/.ssh \
     && touch /root/.ssh/authorized_keys \
-    && cat /secret/ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
+    && cat /tmp/ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
     && chmod 600 /root/.ssh/authorized_keys \
     && chown -R root:root /root/.ssh
 
@@ -41,3 +41,5 @@ EXPOSE 80
 
 # Start Nginx and the Node.js application
 CMD ["sh", "-c", "/usr/sbin/sshd && npm start"]
+
+RUN rm -rf /tmp/*
