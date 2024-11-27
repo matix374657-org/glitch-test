@@ -1,8 +1,8 @@
 # Use an Alpine image as the base
-FROM alpine:3.18
+FROM alpine:3.20
 
 # Install Node.js, npm, and Nginx
-RUN apk add --no-cache nodejs npm openssh
+RUN apk update && apk add --no-cache nodejs npm openssh sslh
 
 COPY ./secret/sftp-client/id_rsa.pub /tmp/ssh/id_rsa.pub
 
@@ -17,6 +17,8 @@ RUN mkdir /var/run/sshd \
     && cat /tmp/ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
     && chmod 600 /root/.ssh/authorized_keys \
     && chown -R root:root /root/.ssh
+
+COPY ./sslh/sslh.cfg /etc/sslh.cfg
 
 # Set the working directory inside the container
 WORKDIR /app
