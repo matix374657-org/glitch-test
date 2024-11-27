@@ -1,5 +1,5 @@
 # Use an Alpine image as the base
-FROM nginx:mainline-alpine3.20
+FROM alpine:3.18
 
 # Install Node.js, npm, and Nginx
 RUN apk add --no-cache nodejs npm openssh
@@ -26,15 +26,6 @@ COPY ./server .
 
 # Install dependencies
 RUN npm install --production
-
-RUN rm -rf /etc/nginx/http.d/* && rm -rf /etc/nginx/conf.d/*
-
-# Copy additional Nginx configuration
-COPY ./nginx-proxy/config/nginx-http-proxy.conf /etc/nginx/http.d/nginx-http-proxy.conf
-
-COPY ./nginx-proxy/config/nginx-proxy.conf /etc/nginx/conf.d/nginx-proxy.conf
-
-COPY ./nginx-proxy/config/main-nginx.conf /etc/nginx/nginx.conf
 
 # Expose ports for Nginx (default: 80)
 EXPOSE 80
