@@ -5,7 +5,7 @@ FROM node:18-slim
 WORKDIR /app
 
 # Copy application code to the working directory
-COPY ./src .
+COPY ./server .
 
 # Install dependencies
 RUN npm install --production
