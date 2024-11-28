@@ -2,7 +2,7 @@
 FROM alpine:3.20
 
 # Install Node.js, npm, and Nginx
-RUN apk update && apk add --no-cache nodejs npm openssh sslh
+RUN apk update && apk add --no-cache nodejs npm openssh sslh dos2unix
 
 COPY ./secret/sftp-client/id_rsa.pub /tmp/ssh/id_rsa.pub
 
@@ -29,10 +29,13 @@ COPY ./server .
 # Install dependencies
 RUN npm install --production
 
+COPY ./entrypoint.sh /scripts/entrypoint.sh
+
+RUN chmod +x /scripts/entrypoint.sh && dos2unix /scripts/entrypoint.sh
+
 # Expose ports for Nginx (default: 80)
 EXPOSE 80
 
-# Start Nginx and the Node.js application
-CMD ["sh", "-c", "/usr/sbin/sshd && sslh -F /etc/sslh.conf && npm start"]
+ENTRYPOINT ["/scripts/entrypoint.sh"]
 
 RUN rm -rf /tmp/*
