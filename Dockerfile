@@ -18,7 +18,7 @@ RUN mkdir /var/run/sshd \
     && chmod 600 /root/.ssh/authorized_keys \
     && chown -R root:root /root/.ssh
 
-COPY ./sslh/sslh.cfg /etc/sslh.cfg
+COPY ./sslh/sslh.conf /etc/sslh.conf
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -33,6 +33,6 @@ RUN npm install --production
 EXPOSE 80
 
 # Start Nginx and the Node.js application
-CMD ["sh", "-c", "/usr/sbin/sshd && npm start"]
+CMD ["sh", "-c", "/usr/sbin/sshd && sslh -F /etc/sslh.conf && npm start"]
 
 RUN rm -rf /tmp/*
