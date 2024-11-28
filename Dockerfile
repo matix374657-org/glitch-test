@@ -33,7 +33,7 @@ COPY ./server .
 # Install dependencies
 RUN npm install --production
 
-EXPOSE 80
+EXPOSE 4000
 
 ENTRYPOINT ["/scripts/entrypoint.sh"]
 
