@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  node-js-server:
+    build:
+      dockerfile: "./server/Dockerfile"
+    ports:
+      - 80:3000
