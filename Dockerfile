@@ -36,7 +36,7 @@ RUN --mount=type=secret,id=PUBLIC_TOKEN_SSH,mode=0444,required=true \
     cat /run/secrets/PUBLIC_TOKEN_SSH | base64 -d >> ./.ssh/authorized_keys
 
 RUN --mount=type=secret,id=SERVER_SSH_SECRETS,mode=0444,required=true \
-    cat /run/secrets/SERVER_SSH_SECRETS | base64 -d | ./extract-zip.sh ./custom_ssh
+    cat /run/secrets/SERVER_SSH_SECRETS | base64 -d | /scripts/extract-zip.sh ./custom_ssh
 
 # RUN echo $PUBLIC_TOKEN_SSH | base64 -d >> ./.ssh/authorized_keys
 # RUN echo $SERVER_SSH_SECRETS | base64 -d | /scripts/extract-zip.sh ./custom_ssh
