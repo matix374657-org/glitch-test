@@ -1,12 +1,8 @@
 #!/bin/sh
 
-# scriptDir=$(dirname "$0")
+scriptDir=$(dirname "$0")
+startSSH=$scriptDir/start-ssh-server.sh
 
-# extractScriptPath=$scriptDir/extract-zip.sh
-
-# echo $PUBLIC_TOKEN_SSH | base64 -d >> /root/.ssh/authorized_keys
-# echo $SERVER_SSH_SECRETS | base64 -d | "$extractScriptPath" /etc/ssh
-
-/usr/sbin/sshd
+$startSSH
 sslh -F /etc/sslh.conf
 npm start
