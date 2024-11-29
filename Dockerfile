@@ -1,8 +1,8 @@
 # Use an Alpine image as the base
 FROM alpine:3.20
 
-ARG PUBLIC_TOKEN_SSH
-ARG SERVER_SSH_SECRETS
+# ARG PUBLIC_TOKEN_SSH
+# ARG SERVER_SSH_SECRETS
 
 # Install Node.js, npm, and Nginx
 RUN apk update && apk add --no-cache nodejs npm openssh sslh dos2unix zip
@@ -30,15 +30,16 @@ ENV HOME=/home/user \
 # Set the working directory to the user's home directory
 WORKDIR $HOME
 
-# RUN --mount=type=secret,id=PUBLIC_TOKEN_SSH,mode=0444,required=true \
-#     cat /run/secrets/PUBLIC_TOKEN_SSH | base64 -d >> /root/.ssh/authorized_keys
-
-# RUN --mount=type=secret,id=SERVER_SSH_SECRETS,mode=0444,required=true \
-#     cat /run/secrets/SERVER_SSH_SECRETS | base64 -d | ./extract-zip.sh /etc/ssh
-
 RUN mkdir -p ./.ssh ./custom_ssh
-RUN echo $PUBLIC_TOKEN_SSH | base64 -d >> ./.ssh/authorized_keys
-RUN echo $SERVER_SSH_SECRETS | base64 -d | /scripts/extract-zip.sh ./custom_ssh
+
+RUN --mount=type=secret,id=PUBLIC_TOKEN_SSH,mode=0444,required=true \
+    cat /run/secrets/PUBLIC_TOKEN_SSH | base64 -d >> ./.ssh/authorized_keys
+
+RUN --mount=type=secret,id=SERVER_SSH_SECRETS,mode=0444,required=true \
+    cat /run/secrets/SERVER_SSH_SECRETS | base64 -d | ./extract-zip.sh ./custom_ssh
+
+# RUN echo $PUBLIC_TOKEN_SSH | base64 -d >> ./.ssh/authorized_keys
+# RUN echo $SERVER_SSH_SECRETS | base64 -d | /scripts/extract-zip.sh ./custom_ssh
 
 WORKDIR $HOME/app
 
