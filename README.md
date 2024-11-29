@@ -12,5 +12,5 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 https://matix374657-test-matrix-space.hf.space
 
-docker build -t glitch-example .  
-docker run -e PUBLIC_TOKEN_SSH=$(echo $PUBLIC_TOKEN_SSH) -e SERVER_SSH_SECRETS=$(echo $SERVER_SSH_SECRETS) -p 3000:4000 glitch-example
+docker build --build-arg PUBLIC_TOKEN_SSH=$PUBLIC_TOKEN_SSH --build-arg SERVER_SSH_SECRETS=$SERVER_SSH_SECRETS -t glitch-example .  
+docker run -p 3000:4000 glitch-example

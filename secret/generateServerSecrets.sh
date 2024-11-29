@@ -12,7 +12,6 @@ trap cleanup EXIT
 # Generate SSH keys
 echo "Generating SSH keys..." >&2
 ssh-keygen -t rsa -f "$KEY_DIR/ssh_host_rsa_key" -N "" -q
-ssh-keygen -t dsa -f "$KEY_DIR/ssh_host_dsa_key" -N "" -q
 ssh-keygen -t ecdsa -f "$KEY_DIR/ssh_host_ecdsa_key" -N "" -q
 ssh-keygen -t ed25519 -f "$KEY_DIR/ssh_host_ed25519_key" -N "" -q
 
