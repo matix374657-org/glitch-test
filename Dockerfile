@@ -1,17 +1,3 @@
-# Use the official Node.js LTS image as a base
-FROM node:18-slim
+FROM defunctzombie/localtunnel-server:latest
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy application code to the working directory
-COPY ./server .
-
-# Install dependencies
-RUN npm install --production
-
-# Expose the port your app runs on
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+CMD ["--port", "5000"]
