@@ -24,5 +24,7 @@ RUN rm -rf /tmp/*
 
 RUN apk del git
 
+EXPOSE 5000
+
 ENV NODE_ENV=production
 ENTRYPOINT ["node", "./bin/server", "--port", "5000", "--domain", "matix374657-test-matrix-space.hf.space"]
